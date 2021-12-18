@@ -9,7 +9,7 @@ function Erc721({erc721list}){
                         Name: <span className="name">{token.name}</span>
                         (<span className="symbol">{token.symbol}</span>)
                         <div className="nft">id: {token.tokenId}</div>
-                        <img src={token.tokenURI} onerror="this.src='../img/no_img.jpg'" width={300}/>
+                        <img src={token.tokenURI} width={300}/>
                     </div>
                 );
             })}
