@@ -1,10 +1,14 @@
 import './App.css';
 import Web3 from 'web3';
 import React, {useState, useEffect} from 'react';
+import erc721Abi from './erc721Abi';
+import TokenList from './component/TokenList.js';
 
 function App() {
   const [web3, setWeb3] = useState();
   const [account, setAccount] = useState('');
+  const [newErc721addr, setNewErc721addr] = useState();
+  const [erc721list, setErc721list] = useState([]);
 
   useEffect(()=>{
     if(typeof window.ethereum != "undefined"){
@@ -25,6 +29,33 @@ function App() {
     setAccount(accounts[0]);
   }
 
+  const addNewErc721Token = async() =>{
+    const tokenContract = await new web3.eth.Contract(erc721Abi, newErc721addr); // 컨트랙트의 ABI와 주소로 *컨트랙트 객체 생성*
+    console.log(tokenContract);
+    console.log(erc721Abi);
+
+    const name = await tokenContract.methods.name().call();
+    const symbol = await tokenContract.methods.symbol().call();
+    const totalSupply = await tokenContract.methods.totalSupply().call();
+
+    let arr = [];
+    for(let i = 1; i <= totalSupply; i++){
+      arr.push(i);
+    }
+
+    for(let tokenId of arr){
+      const tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
+
+      if(String(tokenOwner).toLowerCase() === account){
+        const tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
+        setErc721list((prev)=>{
+          return [...prev, {name, symbol, tokenId, tokenURI}];
+        })
+      }
+    }
+  }
+
+
   return (
     <div className="App">
       <button
@@ -35,6 +66,11 @@ function App() {
         Connect Wallet
       </button>
       <div className='userInfo'>주소: {account}</div>
+      <input type='text' onChange={(event)=>{
+        setNewErc721addr(event.target.value);
+      }}></input>
+      <button onClick={addNewErc721Token}>add new ERC721</button>
+      <TokenList erc721list={erc721list}/>
     </div>
   );
 }
