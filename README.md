@@ -1,3 +1,11 @@
+```
+Wallet Addr1: 0xa38c3be357e4470555c7e33561AA822F08fd36e6
+
+Wallet Addr2: 0x9126f6697893114A2eD44b66548b79721e47BFf3
+
+Contract addr : 0x11227624b7c15E0e364a2cF521fb8869493e2648
+```
+
 ## 현재 계정(addr1) NFT 확인 및 다른 계정에(addr2) 전송
 ![](https://media.vlpt.us/images/mjlee0326/post/d30bf2ec-b2a6-4bd3-baee-acff155d8402/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B5%202021.%2012.%2019.%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2011.27%202.jpg)
 
