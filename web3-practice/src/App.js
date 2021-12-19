@@ -9,6 +9,7 @@ function App() {
   const [account, setAccount] = useState('');
   const [newErc721addr, setNewErc721addr] = useState();
   const [erc721list, setErc721list] = useState([]);
+  const [pressBtn, setPressBtn] = useState(false);
 
   useEffect(()=>{
     if(typeof window.ethereum != "undefined"){
@@ -30,6 +31,7 @@ function App() {
   }
 
   const addNewErc721Token = async() =>{
+    setPressBtn(true);
     const tokenContract = await new web3.eth.Contract(erc721Abi, newErc721addr); // 컨트랙트의 ABI와 주소로 *컨트랙트 객체 생성*
     console.log(tokenContract);
     console.log(erc721Abi);
@@ -70,7 +72,8 @@ function App() {
         setNewErc721addr(event.target.value);
       }}></input>
       <button onClick={addNewErc721Token}>add new ERC721</button>
-      <TokenList erc721list={erc721list}/>
+      {erc721list.length === 0 && pressBtn? <div> No Token :(</div>: 
+      <TokenList newErc721addr={newErc721addr} web3={web3} account ={account} erc721list={erc721list}/>}
     </div>
   );
 }
