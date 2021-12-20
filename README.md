@@ -10,6 +10,11 @@ Contract addr : 0x11227624b7c15E0e364a2cF521fb8869493e2648
 ![](https://images.velog.io/images/mjlee0326/post/41b41020-f5af-40e8-8d64-aa1bb0ffb5e7/project1_result.gif)
 
 ---
+### 초기 화면
+![](https://images.velog.io/images/mjlee0326/post/2dd8c0fc-1795-426c-8872-a4df6faecc77/image.png)
+
+---
+
 ## 계정 1의 NFT 확인
 ![](https://images.velog.io/images/mjlee0326/post/4de7e0bb-4cbd-49d2-90f0-71dc2b1b1fc2/IMG_8955.jpg)
 
