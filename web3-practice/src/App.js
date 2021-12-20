@@ -3,6 +3,13 @@ import Web3 from 'web3';
 import React, {useState, useEffect} from 'react';
 import erc721Abi from './erc721Abi';
 import TokenList from './component/TokenList.js';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import LocalAtmTwoToneIcon from '@mui/icons-material/LocalAtmTwoTone';
+import TextField from '@mui/material/TextField';
+import LoadingButton from '@mui/lab/LoadingButton';
+
+
 
 function App() {
   const [web3, setWeb3] = useState();
@@ -10,6 +17,8 @@ function App() {
   const [newErc721addr, setNewErc721addr] = useState();
   const [erc721list, setErc721list] = useState([]);
   const [pressBtn, setPressBtn] = useState(false);
+  const [pressStart, setPressStart] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
     if(typeof window.ethereum != "undefined"){
@@ -31,6 +40,7 @@ function App() {
   }
 
   const addNewErc721Token = async() =>{
+    setLoading(true);
     setPressBtn(true);
     const tokenContract = await new web3.eth.Contract(erc721Abi, newErc721addr); // 컨트랙트의 ABI와 주소로 *컨트랙트 객체 생성*
     console.log(tokenContract);
@@ -55,25 +65,36 @@ function App() {
         })
       }
     }
+    setLoading(false);
   }
 
 
   return (
     <div className="App">
-      <button
-      className = "metaConnect"
-      onClick={()=>{
-        connectWallet();
-      }}>
-        Connect Wallet
-      </button>
-      <div className='userInfo'>주소: {account}</div>
-      <input type='text' onChange={(event)=>{
-        setNewErc721addr(event.target.value);
-      }}></input>
-      <button onClick={addNewErc721Token}>add new ERC721</button>
-      {erc721list.length === 0 && pressBtn? <div> No Token :(</div>: 
-      <TokenList newErc721addr={newErc721addr} web3={web3} account ={account} erc721list={erc721list}/>}
+      <Container component="main" maxWidth="sm">
+        <Button
+          color="primary"
+          fullWidth
+          variant="outlined"
+          sx={{ mt: 3, mb: 2 }}
+          startIcon={<LocalAtmTwoToneIcon/>}
+          onClick={()=>{
+            connectWallet();
+            setPressStart(true);
+          }}
+        >
+          {pressStart ? account : "Connect Wallet"}
+        </Button>
+            <TextField
+              fullWidth
+              required
+              id="Contract Address"
+              label="Contract Address"
+              onChange={(event)=>{setNewErc721addr(event.target.value)}}
+            />
+        <LoadingButton loading={loading} variant="contained" sx={{mt:2, mb: 4}} onClick={addNewErc721Token}>add new ERC721</LoadingButton>
+      <TokenList newErc721addr={newErc721addr} web3={web3} account ={account} erc721list={erc721list}/>
+      </Container>
     </div>
   );
 }
